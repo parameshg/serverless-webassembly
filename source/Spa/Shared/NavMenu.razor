@@ -1,39 +1,24 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">Blazor</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+﻿<div class="bg-light" id="sidebar-wrapper">
+    <div class="sidebar-logo">
+        <img class="img-responsive" id="logo" src="images/logo.png" />
+    </div>
+    <div class="profile">
+        <div class="profile-bg">
+            <img class="img-responsive" src="images/profile.jpg" />
+        </div>
+        <div class="profile-picture">
+            <img class="img-responsive circle account-photo" src="images/profile.jpg" />
+        </div>
+    </div>
+    <div class="menu list-group list-group-flush">
+        <NavLink class="list-group-item list-group-item-action bg-light" href="/" Match="NavLinkMatch.All">
+            <span class="oi oi-home" aria-hidden="true"></span> Home
+        </NavLink>
+        <NavLink class="list-group-item list-group-item-action bg-light" href="/weather">
+            <span class="oi oi-list-rich" aria-hidden="true"></span> Weather Forecast
+        </NavLink>
+        <NavLink class="list-group-item list-group-item-action bg-light" href="/counter">
+            <span class="oi oi-list-rich" aria-hidden="true"></span> Live Counter
+        </NavLink>
     </div>
 </div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </div>
-    </nav>
-</div>
-
-@code {
-    private bool collapseNavMenu = true;
-
-    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
