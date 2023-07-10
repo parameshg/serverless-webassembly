@@ -1,0 +1,30 @@
+name: uninstall
+on:
+  workflow_dispatch:
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-region: ${{ secrets.AWS_REGION }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        mask-aws-account-id: true
+
+    - name: Delete Files
+      run: awa s3 rm s3://serverless-webassembly --recursive
+
+    - name: Initialize Terraform
+      run: terraform init -backend-config="region=${{secrets.AWS_REGION}}" -backend-config="access_key=${{secrets.AWS_ACCESS_KEY_ID}}" -backend-config="secret_key=${{secrets.AWS_SECRET_ACCESS_KEY}}"
+
+    - name: Validate Terraform
+      run: terraform validate
+
+    - name: Plan Terraform
+      run: terraform plan -var "AWS_ACCOUNT=${{secrets.AWS_ACCOUNT}}" -var "AWS_REGION=${{secrets.AWS_REGION}}" -var "AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}" -var "AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}" -var "SENTRY_ENDPOINT=${{secrets.SENTRY_ENDPOINT}}"
+
+    - name: Apply Terraform
+      run: terraform destroy -auto-approve -var "AWS_ACCOUNT=${{secrets.AWS_ACCOUNT}}" -var "AWS_REGION=${{secrets.AWS_REGION}}" -var "AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}" -var "AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}" -var "SENTRY_ENDPOINT=${{secrets.SENTRY_ENDPOINT}}"

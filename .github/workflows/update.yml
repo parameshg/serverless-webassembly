@@ -1,0 +1,32 @@
+name: update
+on:
+  workflow_dispatch:
+    
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Codebase
+      uses: actions/checkout@v3
+
+    - name: Setup Dotnet
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+
+    - name: Build Codebase
+      run: dotnet publish source/Spa/Spa.csproj
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-region: ${{ secrets.AWS_REGION }}
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        mask-aws-account-id: true
+
+    - name: Delete Files
+      run: awa s3 rm s3://serverless-webassembly --recursive
+
+    - name: Upload Files
+      run: aws s3 cp source/Spa/bin/Debug/net6.0/publish/wwwroot s3://serverless-webassembly --recursive

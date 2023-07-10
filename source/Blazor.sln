@@ -5,6 +5,11 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spa", "Spa\Spa.csproj", "{B79D54E3-F3A0-40F2-950C-0DBD68F1DBCE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{37B95240-A0FC-46FD-89B5-A4DFF872130B}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\stateful-serverless-api\serverless.tf = ..\..\stateful-serverless-api\serverless.tf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
