@@ -32,10 +32,10 @@ jobs:
       run: terraform validate
 
     - name: Plan Terraform
-      run: terraform plan -var "AWS_ACCOUNT=${{secrets.AWS_ACCOUNT}}" -var "AWS_REGION=${{secrets.AWS_REGION}}" -var "AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}" -var "AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}" -var "SENTRY_ENDPOINT=${{secrets.SENTRY_ENDPOINT}}"
+      run: terraform plan -var "AWS_ACCOUNT=${{secrets.AWS_ACCOUNT}}" -var "AWS_REGION=${{secrets.AWS_REGION}}" -var "AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}" -var "AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}"
 
     - name: Apply Terraform
-      run: terraform apply -auto-approve -var "AWS_ACCOUNT=${{secrets.AWS_ACCOUNT}}" -var "AWS_REGION=${{secrets.AWS_REGION}}" -var "AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}" -var "AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}" -var "SENTRY_ENDPOINT=${{secrets.SENTRY_ENDPOINT}}"
+      run: terraform apply -auto-approve -var "AWS_ACCOUNT=${{secrets.AWS_ACCOUNT}}" -var "AWS_REGION=${{secrets.AWS_REGION}}" -var "AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}" -var "AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}"
 
-    - name: Upload Files
+    - name: Upload Binaries
       run: aws s3 cp source/Spa/bin/Debug/net6.0/publish/wwwroot s3://serverless-webassembly --recursive

@@ -25,8 +25,8 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         mask-aws-account-id: true
 
-    - name: Delete Files
+    - name: Delete Binaries
       run: awa s3 rm s3://serverless-webassembly --recursive
 
-    - name: Upload Files
+    - name: Upload Binaries
       run: aws s3 cp source/Spa/bin/Debug/net6.0/publish/wwwroot s3://serverless-webassembly --recursive
