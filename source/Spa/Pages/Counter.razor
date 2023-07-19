@@ -4,9 +4,9 @@
 
 <h1>Counter</h1>
 
-<p role="status">Current count: @currentCount</p>
+<RadzenButton Text="Ping" Click="@IncrementCount"></RadzenButton>
 
-<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+Current count: @currentCount
 
 @code {
     private int currentCount = 0;
