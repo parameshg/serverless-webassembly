@@ -2,17 +2,15 @@
 
 <PageTitle>Counter</PageTitle>
 
-<h1>Counter</h1>
+<h1>Counter (@count)</h1>
 
-<RadzenButton Text="Ping" Click="@IncrementCount"></RadzenButton>
-
-Current count: @currentCount
+<RadzenButton Text="Ping" Click="@Ping"></RadzenButton>
 
 @code {
-    private int currentCount = 0;
+    private int count = 0;
 
-    private void IncrementCount()
+    private void Ping()
     {
-        currentCount++;
+        count++;
     }
 }
