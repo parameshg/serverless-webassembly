@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Radzen;
 
 namespace Spa
@@ -14,7 +15,11 @@ namespace Spa
 
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+
+            builder.Services.AddHttpClient("api", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)).AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+            builder.Services.AddScoped(provider => provider.GetRequiredService<IHttpClientFactory>().CreateClient("api"));
 
             builder.Services.AddScoped<DialogService>();
 
@@ -23,6 +28,15 @@ namespace Spa
             builder.Services.AddScoped<TooltipService>();
 
             builder.Services.AddScoped<ContextMenuService>();
+
+            builder.Services.AddOidcAuthentication(options =>
+            {
+                builder.Configuration.Bind("Auth0", options.ProviderOptions);
+
+                options.ProviderOptions.ResponseType = "code";
+
+                options.ProviderOptions.AdditionalProviderParameters.Add("audience", builder.Configuration["Auth0:Audience"]);
+            });
 
             await builder.Build().RunAsync();
         }

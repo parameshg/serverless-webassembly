@@ -1,0 +1,24 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
+
+<AuthorizeView>
+    <Authorized>
+        Hello, @context.User?.Identity?.Name!
+        <a href="#" @onclick="Logout">Logout</a>
+    </Authorized>
+    <NotAuthorized>
+        <RadzenLink Path="authentication/login" Text="Login" />
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private async Task Logout(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+
+        Navigation.NavigateTo("authentication/logout");
+    }
+}

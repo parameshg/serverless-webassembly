@@ -397,3 +397,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /images/.$design.drawio.bkp
+/source/Spa/wwwroot/appsettings.json
