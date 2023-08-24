@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Radzen;
+using System.Linq.Dynamic.Core.Tokenizer;
 
 namespace Spa
 {
@@ -31,6 +32,14 @@ namespace Spa
 
             builder.Services.AddOidcAuthentication(options =>
             {
+                options.ProviderOptions.DefaultScopes.Clear();
+
+                options.ProviderOptions.DefaultScopes.Add("openid");
+
+                options.ProviderOptions.DefaultScopes.Add("profile");
+
+                options.ProviderOptions.DefaultScopes.Add("email");
+
                 builder.Configuration.Bind("Auth0", options.ProviderOptions);
 
                 options.ProviderOptions.ResponseType = "code";
