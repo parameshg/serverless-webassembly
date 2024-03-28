@@ -7,10 +7,10 @@
 <AuthorizeView>
     <Authorized>
         Hello, @context.User?.Identity?.Name!
-        <a href="#" @onclick="Logout">Logout</a>
+        <MudButton Variant="Variant.Text" Color="Color.Default" FullWidth="true" OnClick="@Logout">Logout</MudButton>
     </Authorized>
     <NotAuthorized>
-        <RadzenLink Path="authentication/login" Text="Login" />
+        <MudButton Variant="Variant.Text" Color="Color.Default" FullWidth="true" Href="authentication/login">Login</MudButton>
     </NotAuthorized>
 </AuthorizeView>
 

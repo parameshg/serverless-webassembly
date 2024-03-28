@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
-using Radzen;
-using System.Linq.Dynamic.Core.Tokenizer;
+using MudBlazor.Services;
 
 namespace Spa
 {
@@ -18,17 +17,11 @@ namespace Spa
 
             // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+            builder.Services.AddMudServices();
+
             builder.Services.AddHttpClient("api", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)).AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             builder.Services.AddScoped(provider => provider.GetRequiredService<IHttpClientFactory>().CreateClient("api"));
-
-            builder.Services.AddScoped<DialogService>();
-
-            builder.Services.AddScoped<NotificationService>();
-
-            builder.Services.AddScoped<TooltipService>();
-
-            builder.Services.AddScoped<ContextMenuService>();
 
             builder.Services.AddOidcAuthentication(options =>
             {

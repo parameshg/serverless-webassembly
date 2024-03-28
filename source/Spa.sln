@@ -7,7 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spa", "Spa\Spa.csproj", "{B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_", "_", "{37B95240-A0FC-46FD-89B5-A4DFF872130B}"
 	ProjectSection(SolutionItems) = preProject
+		..\.github\workflows\install.yml = ..\.github\workflows\install.yml
 		..\serverless.tf = ..\serverless.tf
+		..\.github\workflows\uninstall.yml = ..\.github\workflows\uninstall.yml
+		..\.github\workflows\update.yml = ..\.github\workflows\update.yml
 	EndProjectSection
 EndProject
 Global

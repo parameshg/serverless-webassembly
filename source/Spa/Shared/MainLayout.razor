@@ -1,34 +1,60 @@
-﻿@inherits LayoutComponentBase
+﻿@using MudBlazor
+@inherits LayoutComponentBase
 
-<RadzenLayout Style="height: 980px; grid-template-columns: auto 1fr auto; grid-template-areas: 'rz-header rz-header rz-header' 'rz-sidebar rz-body rz-right-sidebar'">
-    <RadzenHeader>
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
-            <RadzenSidebarToggle Click="@(() => sidebar = !sidebar)" />
-            <RadzenLabel Text="Header" />
-        </RadzenStack>
-    </RadzenHeader>
-    <RadzenSidebar @bind-Expanded="@sidebar">
-        <RadzenPanelMenu>
-            <RadzenPanelMenuItem Text="Home" Icon="home" Path="/" />
-            <RadzenPanelMenuItem Text="Counter" Icon="account_box" Path="/counter" />
-            <RadzenPanelMenuItem Text="Weather" Icon="account_box" Path="/weather" />
-        </RadzenPanelMenu>
-        <div class="rz-p-4">
-            Left Sidebar
-        </div>
-    </RadzenSidebar>
-    <RadzenBody>
-        <div class="rz-p-4">@Body</div>
-    </RadzenBody>
-    <RadzenSidebar @bind-Expanded="@sidebar" Style="width: 300px; grid-area: rz-right-sidebar">
-        <div class="rz-p-4">
-            <AccessControl />
-            <br /><br />
-            Right Sidebar
-        </div>
-    </RadzenSidebar>
-</RadzenLayout>
+<style>
+    .Blurry {
+        backdrop-filter: blur(10px);
+    }
+</style>
+
+<PageTitle>SPA</PageTitle>
+<MudThemeProvider IsDarkMode="true"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+
+<MudLayout>
+    <MudAppBar>
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => ToggleDrawer())" />
+        <MudText Typo="Typo.h6" Class="ml-3">SPA</MudText>
+        <MudSpacer />
+        <MudToolBar>
+            <MudIconButton Icon="@(DarkMode ? Icons.Material.Filled.LightMode : Icons.Material.Filled.LightMode)" OnClick="@(args => DarkMode = false)" Title="@(DarkMode ? "Light Mode" : "Dark Mode")" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Settings" Disabled="false" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Notifications" Disabled="false" />
+            <MudIconButton Disabled="true" />
+            <MudMenu AnchorOrigin="Origin.BottomRight">
+                <ActivatorContent>
+                    <MudAvatar Color="Color.Default">P</MudAvatar>
+                </ActivatorContent>
+                <ChildContent>
+                    <MudMenuItem>Profile</MudMenuItem>
+                    <AccessControl />
+                </ChildContent>
+            </MudMenu>
+        </MudToolBar>
+    </MudAppBar>
+    <MudDrawer ClipMode="DrawerClipMode.Always" @bind-Open="@Drawer">
+        <MudNavMenu>
+            <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
+            <MudNavLink Href="/servers" Match="NavLinkMatch.Prefix">Servers</MudNavLink>
+            <MudNavGroup Title="Settings" Expanded="true">
+                <MudNavLink Href="/users" Match="NavLinkMatch.Prefix">Users</MudNavLink>
+                <MudNavLink Href="/security" Match="NavLinkMatch.Prefix">Security</MudNavLink>
+            </MudNavGroup>
+            <MudNavLink Href="/about" Match="NavLinkMatch.Prefix">About</MudNavLink>
+        </MudNavMenu>
+    </MudDrawer>
+    <MudMainContent>
+        <MudContainer MaxWidth="MaxWidth.Medium">
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>
 
 @code {
-    bool sidebar = true;
+    private bool DarkMode { get; set; } = true;
+
+    private bool Drawer { get; set; } = false;
+
+    private void ToggleDrawer() => Drawer = !Drawer;
 }
